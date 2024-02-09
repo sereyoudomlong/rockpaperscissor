@@ -40,6 +40,13 @@ function playRound(playerSelection, computerSelection) {
   }
 }
 
-const playerSelection = "rock";
-const computerSelection = getComputerChoice();
-console.log(playRound(playerSelection, computerSelection));
+/**
+ * main function of the game
+ */
+function playGame() {
+  var playerSelection = prompt("Enter your Weapon (Rock, Paper, Scissor):");
+  const computerSelection = getComputerChoice();
+  console.log(playRound(playerSelection, computerSelection));
+}
+
+playGame();

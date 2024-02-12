@@ -1,3 +1,6 @@
+var playerScore = 0;
+var computerScore = 0;
+
 /**
  * Function that randomise computer choices
  * @returns the randomised choice
@@ -24,29 +27,51 @@ function playRound(playerSelection, computerSelection) {
   };
 
   if (playerSelection.toLowerCase() == computerSelection.toLowerCase()) {
-    return "Draw";
+    const resultDiv = document.querySelector("#result");
+    resultDiv.textContent = `Draw`;
   }
 
   if (
     whatBeats[playerSelection.toLowerCase()] == computerSelection.toLowerCase()
   ) {
-    return `You Win! ${playerSelection} beats ${computerSelection}`;
+    const resultDiv = document.querySelector("#result");
+    resultDiv.textContent = `You Win! ${playerSelection} beats ${computerSelection}`;
+    playerScore++;
   }
 
   if (
     whatBeats[computerSelection.toLowerCase()] == playerSelection.toLowerCase()
   ) {
-    return `You Lose! ${computerSelection} beats ${playerSelection}`;
+    const resultDiv = document.querySelector("#result");
+    resultDiv.textContent = `You Lose! ${computerSelection} beats ${playerSelection}`;
+    computerScore++;
+  }
+
+  const resultDiv = document.querySelector("#score");
+  resultDiv.innerHTML = `Player score: ${playerScore}<br>Computer Score: ${computerScore}`;
+
+  if (playerScore == 5) {
+    const resultDiv = document.querySelector("#result");
+    resultDiv.textContent = `Congratulation!!! You have won 5 times against the computer!!`;
+    playerScore = 0;
+    computerScore = 0;
+  }
+
+  if (computerScore == 5) {
+    const resultDiv = document.querySelector("#result");
+    resultDiv.textContent = `Wow you suck balls!! losing to a computer, sad life :(`;
+    playerScore = 0;
+    computerScore = 0;
   }
 }
 
-/**
- * main function of the game
- */
-function playGame() {
-  var playerSelection = prompt("Enter your Weapon (Rock, Paper, Scissor):");
-  const computerSelection = getComputerChoice();
-  console.log(playRound(playerSelection, computerSelection));
-}
+document.addEventListener("DOMContentLoaded", function () {
+  const btns = document.querySelectorAll(".btn");
+  btns.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      console.log(playRound(btn.id, getComputerChoice()));
+    });
+  });
+});
 
-playGame();
+//playGame();
